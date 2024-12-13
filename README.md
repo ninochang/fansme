@@ -5,4 +5,4 @@
 
 
 # Run app
-`flaskapi dev src/main.py`
+`fastapi dev src/main.py`
