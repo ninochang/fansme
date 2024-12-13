@@ -1,0 +1,62 @@
+x-defaults: &defaults
+  env_file:
+  - path: .env
+    required: false
+  networks:
+  - default
+
+x-environment: &environment
+  PYTHONOPTIMIZE: "1"
+  PYTHONWARNINGS: default
+  # MONGO_URL: mongodb://mongos:27018/swag?appname=swag&readPreference=secondaryPreferred&connect=false&connectTimeoutMS=1000&compressors=zstd
+  # CELERY_BROKER_WRITE_URL: redis://redis:6379/9
+  # CELERY_BROKER_READ_URL: redis://redis:6379/9
+  # CELERY_RESULT_BACKEND: redis://redis:6379/8
+  # CELERY_TRACE_APP: "1"
+  # CACHE_REDIS_URL: redis://redis:6379/0?max_connections=20&socket_connect_timeout=5&protocol=3
+  # CACHE_REDIS_URL_CACHE_P: redis://redis:6379/1?max_connections=20&socket_connect_timeout=5&protocol=3
+  # CACHE_REDIS_URL_CACHE_EVENTS: redis://redis:6379/4?max_connections=20&socket_connect_timeout=5&protocol=3
+  # RATELIMIT_STORAGE_URI: redis://redis:6379/3?max_connections=1&socket_connect_timeout=5&protocol=3
+
+# volumes:
+#   redis:
+
+services:
+  api:
+    # entrypoint: ["uvicorn"]
+    # command: ["main:app", "--reload"]
+    entrypoint: ['fastapi']
+    command: ['dev', '--host', '0.0.0.0', 'src/main.py']
+    build:
+      context: .
+    hostname: fansme
+    environment:
+      << : *environment
+    # depends_on:
+    # - redis
+    
+    ports:
+    - "8000:8000"
+    volumes:
+    - .:/usr/src/app/
+    deploy:
+      replicas: ${DOCKER_COMPOSE__SERVICES__REDIS__DEPLOY__REPLICAS:-1}
+    << : *defaults
+
+  # redis:
+  #   image: redis/redis-stack:7.2.0-v11
+  #   volumes:
+  #   - ./config/redis.conf:/redis-stack.conf:ro
+  #   - redis:/data
+  #   ports:
+  #   - 8001:8001
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "PING"]
+  #     interval: 1m
+  #     timeout: 1s
+  #     retries: 5
+  #     start_period: 0s
+  #   deploy:
+  #     replicas: ${DOCKER_COMPOSE__SERVICES__REDIS__DEPLOY__REPLICAS:-1}
+  #   << : *defaults
+
