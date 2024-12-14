@@ -21,6 +21,7 @@ def create_access_token(data: dict, expires_delta: datetime.timedelta | None = N
     encoded_jwt = jwt.encode(to_encode, config.SECRET_KEY, algorithm='HS256')
     return encoded_jwt
 
+
 @app.post('/login')
 async def login(
     form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
