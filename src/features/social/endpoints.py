@@ -10,6 +10,7 @@ from typing import Annotated
 import src.dependencies
 
 from . import application as app
+from . import dependencies
 
 from src import config
 from src.schemas import User, Token
