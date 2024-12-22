@@ -10,7 +10,7 @@ from typing import Annotated
 import src.dependencies
 
 from . import application as app
-from . import dependencies
+from . import dependencies, schemas
 
 from src import config
 from src.schemas import User, Token
@@ -51,6 +51,23 @@ async def get_me_info(
 async def google_login(google_sso: GoogleSSO = Depends(dependencies.get_google_sso)):
     async with google_sso:
         return await google_sso.get_login_redirect()
+
+
+@app.post('/login/password')
+async def password_login(
+    login_user: schemas.LoginUserPassword,
+    password_sso: dependencies.PasswordSSO = Depends(dependencies.get_password_sso),
+) -> Token:
+    async with password_sso:
+        user = await password_sso.verify_and_process(
+            login_user.username,
+            login_user.password,
+        )
+
+        access_token = create_access_token(
+            data={'sub': user['id']}
+        )
+        return Token(access_token=access_token, token_type='bearer')
 
 
 @app.get('/login/google/callback')
