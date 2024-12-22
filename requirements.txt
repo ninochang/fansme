@@ -31,13 +31,19 @@ decorator==5.1.1
 dnspython==2.7.0
     # via email-validator
 email-validator==2.2.0
-    # via fastapi
+    # via
+    #   fastapi
+    #   pydantic
 executing==2.1.0
     # via stack-data
 fastapi==0.115.5
-    # via fansme (pyproject.toml)
+    # via
+    #   fansme (pyproject.toml)
+    #   fastapi-sso
 fastapi-cli==0.0.6
     # via fastapi
+fastapi-sso==0.17.0
+    # via fansme (pyproject.toml)
 h11==0.14.0
     # via
     #   httpcore
@@ -47,7 +53,9 @@ httpcore==1.0.7
 httptools==0.6.4
     # via uvicorn
 httpx==0.28.1
-    # via fastapi
+    # via
+    #   fastapi
+    #   fastapi-sso
 idna==3.10
     # via
     #   anyio
@@ -67,6 +75,8 @@ matplotlib-inline==0.1.7
     # via ipython
 mdurl==0.1.2
     # via markdown-it-py
+oauthlib==3.2.2
+    # via fastapi-sso
 parso==0.8.4
     # via jedi
 pexpect==4.9.0
@@ -82,6 +92,7 @@ pycparser==2.22
 pydantic==2.9.2
     # via
     #   fastapi
+    #   fastapi-sso
     #   pydantic-settings
 pydantic-core==2.23.4
     # via pydantic

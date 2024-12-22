@@ -1,14 +1,18 @@
 import datetime
 import jwt
 
-from fastapi import Depends
+from fastapi import Depends, Request
 from fastapi.security import OAuth2PasswordRequestForm
+from fastapi_sso.sso.google import GoogleSSO
 from typing import Annotated
 
 
-from . import application as app
+import src.dependencies
 
-from src import config, dependencies
+from . import application as app
+from . import dependencies
+
+from src import config
 from src.schemas import User, Token
 
 def create_access_token(data: dict, exp: datetime.timedelta | int = None):
@@ -38,9 +42,23 @@ async def login(
 
 @app.get('/me', response_model=User)
 async def get_me_info(
-    user: Annotated[User, Depends(dependencies.authenticated)],
+    user: Annotated[User, Depends(src.dependencies.authenticated)],
 ):
     return user
 
 
+@app.get('/login/google')
+async def google_login(google_sso: GoogleSSO = Depends(dependencies.get_google_sso)):
+    async with google_sso:
+        return await google_sso.get_login_redirect()
+
+
+@app.get('/login/google/callback')
+async def google_callback(request: Request, google_sso: GoogleSSO = Depends(dependencies.get_google_sso)) -> Token:
+    async with google_sso:
+        user = await google_sso.verify_and_process(request)
+        access_token = create_access_token(
+            data={'sub': user.id}
+        )
+    return Token(access_token=access_token, token_type='bearer')
 

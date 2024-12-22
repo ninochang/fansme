@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "boltons>=24.1.0",
+    "fastapi-sso>=0.17.0",
     "fastapi[standard]>=0.115.5",
     "ipython>=8.31.0",
     "pydantic-settings>=2.7.0",
