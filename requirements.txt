@@ -31,7 +31,9 @@ decorator==5.1.1
 dnspython==2.7.0
     # via email-validator
 email-validator==2.2.0
-    # via fastapi
+    # via
+    #   fastapi
+    #   pydantic
 executing==2.1.0
     # via stack-data
 fastapi==0.115.5
@@ -73,6 +75,8 @@ matplotlib-inline==0.1.7
     # via ipython
 mdurl==0.1.2
     # via markdown-it-py
+oauthlib==3.2.2
+    # via fastapi-sso
 parso==0.8.4
     # via jedi
 pexpect==4.9.0
