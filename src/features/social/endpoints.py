@@ -56,9 +56,8 @@ async def google_login(google_sso: GoogleSSO = Depends(dependencies.get_google_s
 async def google_callback(request: Request, google_sso: GoogleSSO = Depends(dependencies.get_google_sso)) -> Token:
     async with google_sso:
         user = await google_sso.verify_and_process(request)
-        access_token_expires = config.ACCESS_TOKEN_EXPIRE_TTL
         access_token = create_access_token(
-            data={'sub': user.id}, expires_delta=access_token_expires
+            data={'sub': user.id}
         )
     return Token(access_token=access_token, token_type='bearer')
 
