@@ -2,7 +2,6 @@ import datetime
 import jwt
 
 from fastapi import Depends, Request
-from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_sso.sso.google import GoogleSSO
 from typing import Annotated
 
@@ -27,17 +26,6 @@ def create_access_token(data: dict, exp: datetime.timedelta | int = None):
     encoded_jwt = jwt.encode(to_encode, config.SECRET_KEY, algorithm='HS256')
     
     return encoded_jwt
-
-
-@app.post('/login')
-async def login(
-    form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
-) -> Token:
-    user = User(id=form_data.username, username=form_data.password)
-    access_token = create_access_token(
-        data={'sub': user.username},
-    )
-    return Token(access_token=access_token, token_type='bearer')
 
 
 @app.get('/me', response_model=User)
