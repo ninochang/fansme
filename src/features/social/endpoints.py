@@ -67,3 +67,20 @@ async def google_callback(request: Request, google_sso: GoogleSSO = Depends(depe
         )
     return Token(access_token=access_token, token_type='bearer')
 
+
+
+@app.post('/register/password')
+async def password_register(
+    login_user: schemas.LoginUserPassword,
+    password_sso: dependencies.PasswordSSO = Depends(dependencies.get_password_sso),
+) -> Token:
+    async with password_sso:
+        user = await password_sso.verify_and_register(
+            login_user.username,
+            login_user.password,
+        )
+
+        access_token = create_access_token(
+            data={'sub': str(user.id)}
+        )
+        return Token(access_token=access_token, token_type='bearer')
