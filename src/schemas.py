@@ -1,5 +1,6 @@
-from typing import Optional
+# -*- coding: utf-8 -*-
 from pydantic import BaseModel
+
 
 class User(BaseModel):
     id: str

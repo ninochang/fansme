@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 import mongoengine
-
 from fastapi import FastAPI
 
-from src import auth, features, config
+from src import auth, config, features
 
 app = FastAPI()
 app.include_router(auth.router)

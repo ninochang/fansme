@@ -1,9 +1,11 @@
-import os
+# -*- coding: utf-8 -*-
 import datetime
+import os
 
-from pydantic_settings import BaseSettings
-from pydantic import Field
 from boltons import timeutils
+from pydantic import Field
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     SECRET_KEY: str = Field()

@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from pydantic import Field
 from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     SSO_GOOGLE_CLIENT_ID: str = Field('436053855190-lsps2nrlc5383n6ks8ri8hj1kfflrljt.apps.googleusercontent.com')

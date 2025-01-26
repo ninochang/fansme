@@ -1,22 +1,22 @@
+# -*- coding: utf-8 -*-
 import datetime
-import jwt
-
-from fastapi import Depends, Request
-from fastapi_sso.sso.google import GoogleSSO
 from typing import Annotated
 
+import jwt
+from fastapi import Depends, Request
+from fastapi_sso.sso.google import GoogleSSO
 
 import src.dependencies
+from src import config
+from src.schemas import Token, User
 
 from . import application as app
 from . import dependencies, schemas
 
-from src import config
-from src.schemas import User, Token
 
 def create_access_token(data: dict, exp: datetime.timedelta | int = None):
     to_encode = data.copy()
-    
+
     if isinstance(exp, int):
         exp = datetime.datetime.fromtimestamp(exp, datetime.UTC)
 
@@ -24,7 +24,7 @@ def create_access_token(data: dict, exp: datetime.timedelta | int = None):
 
     to_encode.update({'exp': exp})
     encoded_jwt = jwt.encode(to_encode, config.SECRET_KEY, algorithm='HS256')
-    
+
     return encoded_jwt
 
 

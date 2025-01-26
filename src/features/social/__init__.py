@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from fastapi import APIRouter
 from fastapi_sso.sso.google import GoogleSSO
 
@@ -8,10 +9,9 @@ application = router = APIRouter(
 )
 
 from . import settings
+
 config = settings.Settings()
 
-from . import endpoints, dependencies
+from . import dependencies, endpoints
 
 __all__ = ('endpoints', 'dependencies', )
-
-

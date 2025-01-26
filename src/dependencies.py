@@ -1,13 +1,13 @@
-import jwt
-
-from fastapi import HTTPException, status, Depends
-from fastapi.security import OAuth2PasswordBearer
-
+# -*- coding: utf-8 -*-
 from typing import Annotated
 
+import jwt
+from fastapi import Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer
+
 from src import config
-from src.schemas import User as UserSchema
 from src.models import User
+from src.schemas import User as UserSchema
 
 # OAuth2 password flow
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl='login')

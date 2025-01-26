@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 import mongoengine
-
-from fastapi import Request, HTTPException, Body
+from fastapi import Body, HTTPException, Request
+from fastapi_sso.sso.base import OpenID, SSOBase
 from fastapi_sso.sso.google import GoogleSSO
-from fastapi_sso.sso.base import SSOBase, OpenID
 
 from src.models import User
 
 from . import config
+
 
 class PasswordSSO(SSOBase):
     provider = 'password'
@@ -38,8 +39,8 @@ class PasswordSSO(SSOBase):
 
 def get_google_sso() -> GoogleSSO:
     return GoogleSSO(
-        config.SSO_GOOGLE_CLIENT_ID, 
-        config.SSO_GOOGLE_CLIENT_SECRET, 
+        config.SSO_GOOGLE_CLIENT_ID,
+        config.SSO_GOOGLE_CLIENT_SECRET,
         config.SSO_GOOGLE_CALLBACK_URL,
     )
 
