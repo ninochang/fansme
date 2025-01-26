@@ -29,7 +29,9 @@ cryptography==43.0.3
 decorator==5.1.1
     # via ipython
 dnspython==2.7.0
-    # via email-validator
+    # via
+    #   email-validator
+    #   pymongo
 email-validator==2.2.0
     # via
     #   fastapi
@@ -75,6 +77,8 @@ matplotlib-inline==0.1.7
     # via ipython
 mdurl==0.1.2
     # via markdown-it-py
+mongoengine==0.29.1
+    # via fansme (pyproject.toml)
 oauthlib==3.2.2
     # via fastapi-sso
 parso==0.8.4
@@ -104,6 +108,8 @@ pygments==2.18.0
     #   rich
 pyjwt==2.10.1
     # via fansme (pyproject.toml)
+pymongo==4.10.1
+    # via mongoengine
 python-dotenv==1.0.1
     # via
     #   pydantic-settings
