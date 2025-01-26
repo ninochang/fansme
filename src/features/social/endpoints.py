@@ -53,7 +53,7 @@ async def password_login(
         )
 
         access_token = create_access_token(
-            data={'sub': user['id']}
+            data={'sub': str(user.id)}
         )
         return Token(access_token=access_token, token_type='bearer')
 
