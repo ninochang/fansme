@@ -37,6 +37,7 @@ services:
     - "8000:8000"
     volumes:
     - .:/usr/src/app/
+    - /usr/src/app/.venv
     deploy:
       replicas: ${DOCKER_COMPOSE__SERVICES__REDIS__DEPLOY__REPLICAS:-1}
     << : *defaults
