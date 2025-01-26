@@ -18,8 +18,8 @@ x-environment: &environment
   # CACHE_REDIS_URL_CACHE_EVENTS: redis://redis:6379/4?max_connections=20&socket_connect_timeout=5&protocol=3
   # RATELIMIT_STORAGE_URI: redis://redis:6379/3?max_connections=1&socket_connect_timeout=5&protocol=3
 
-# volumes:
-#   redis:
+volumes:
+  mongo:
 
 services:
   api:
@@ -31,10 +31,8 @@ services:
       context: .
     hostname: fansme
     environment:
+      MONGODB_URL: mongodb://mongo:27017/
       << : *environment
-    # depends_on:
-    # - redis
-    
     ports:
     - "8000:8000"
     volumes:
@@ -42,6 +40,13 @@ services:
     deploy:
       replicas: ${DOCKER_COMPOSE__SERVICES__REDIS__DEPLOY__REPLICAS:-1}
     << : *defaults
+  mongo:
+    image: mongo:8.0.4
+    restart: always
+    ports: 
+    - 27017:27017
+    volumes:
+    - mongo:/data/db
 
   # redis:
   #   image: redis/redis-stack:7.2.0-v11

@@ -1,6 +1,11 @@
+import mongoengine
+
 from fastapi import Request, HTTPException, Body
 from fastapi_sso.sso.google import GoogleSSO
 from fastapi_sso.sso.base import SSOBase, OpenID
+
+from src.models import User
+
 from . import config
 
 class PasswordSSO(SSOBase):
@@ -8,13 +13,26 @@ class PasswordSSO(SSOBase):
 
     async def verify_and_process(self, username: str, password: str):
         # GET user by username from db
-        user = {
-            'id': 'dummy_id',
-            'username': username, 
-            'password': '1234',
-        }
-        if password != user['password']:
+        if not (user := User.objects.only(
+            'password',
+        ).filter(
+            username=username,
+        ).first()):
             raise HTTPException(status_code=403)
+
+        if password != user.password:
+            raise HTTPException(status_code=403)
+
+        return user
+
+    async def verify_and_register(self, username: str, password: str):
+        try:
+            user = User.objects.create(
+                username=username,
+                password=password,
+            )
+        except mongoengine.errors.NotUniqueError as err:
+            raise HTTPException(status_code=403) from err
 
         return user
 
