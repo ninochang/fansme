@@ -36,7 +36,7 @@ jobs:
           core.setOutput('nproc', require('os').cpus().length * 2 + 1)
           core.setOutput('ref_name', ref_name)
           core.setOutput('ref_name_slug', ref_name.replace(/[/_\.\+]/g, '-'))
-          core.setOutput('push_to_registry', Boolean(ref_name.match(/^(master|release|hotfix|feature\/ci)$/)))
+          core.setOutput('push_to_registry', Boolean(ref_name.match(/^(master)$/)))
           core.setOutput('version', context.sha.slice(0, 7))
 
     - name: Setup - buildx
