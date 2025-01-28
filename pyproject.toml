@@ -19,6 +19,3 @@ dependencies = [
 ]
 
 
-# Pre-commit hooks related config.
-[tool.pycln]
-all = true
