@@ -2,7 +2,7 @@ ARG PYTHON_VERSION="3.12.5"
 ARG UV_VERSION="0.5.2"
 
 # UV
-FROM ghcr.io/astral-sh/uv:${UV_VERSION} as uv
+FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
 
 
 # Dependency
