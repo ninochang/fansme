@@ -17,3 +17,8 @@ dependencies = [
     "types-redis>=4.6.0.20241004",
     "uvicorn>=0.32.0",
 ]
+
+
+# Pre-commit hooks related config.
+[tool.pycln]
+all = true
