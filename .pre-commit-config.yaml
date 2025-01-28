@@ -20,7 +20,6 @@ repos:
   - id: check-json
   - id: check-yaml
     args: [--allow-multiple-documents]
-    exclude: ^swag/features/payouts/templates/payouts/
   - id: mixed-line-ending
   - id: check-ast
 
